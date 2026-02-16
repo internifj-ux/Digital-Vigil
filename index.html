@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IFJ Candle Vigil</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFJ Candle Vigil</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Optional: social media preview -->
+  <meta property="og:title" content="IFJ Candle Vigil - Remember Journalists Killed in 2025">
+  <meta property="og:description" content="Light a candle to honor journalists killed in 2025. #MoreThanANumber">
+  <meta property="og:image" content="images/candle.gif">
+  <meta property="og:url" content="https://yourusername.github.io/digital-candle-vigil/">
 </head>
 <body>
   <div class="vigil-container">
@@ -20,6 +26,61 @@
     <div id="candleWall" class="candle-wall"></div>
   </div>
 
-<script src="script.js"></script>
+  <!-- Script for candle logic -->
+  <script>
+    // Get elements
+    const form = document.getElementById('candleForm');
+    const candleWall = document.getElementById('candleWall');
+    const candleCountDisplay = document.getElementById('candleCount');
+
+    // Load candles from localStorage OR empty array
+    let candles = JSON.parse(localStorage.getItem('candles')) || [];
+
+    // Function to render all candles
+    function renderCandles() {
+      candleWall.innerHTML = ""; // clear wall first
+      candles.forEach(candleData => {
+        const candle = document.createElement('div');
+        candle.classList.add('candle');
+
+        candle.innerHTML = `
+          <img src="images/candle.gif" class="candle-img" alt="Candle">
+          <h3>${candleData.name}</h3>
+          <p>${candleData.message}</p>
+        `;
+
+        candleWall.appendChild(candle);
+      });
+
+      // Update counter
+      candleCountDisplay.textContent = candles.length;
+    }
+
+    // Initial render when page loads
+    renderCandles();
+
+    // Form submit event
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('nameInput').value.trim();
+      const message = document.getElementById('messageInput').value.trim() || "In memory";
+
+      // Create new candle object
+      const newCandle = { name, message };
+
+      // Add to candles array
+      candles.push(newCandle);
+
+      // Save updated array to localStorage
+      localStorage.setItem('candles', JSON.stringify(candles));
+
+      // Re-render
+      renderCandles();
+
+      // Reset form
+      form.reset();
+    });
+  </script>
 </body>
 </html>
