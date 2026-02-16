@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFJ Candle Vigil</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="vigil-container">
+    <h1>Light a Candle for Journalists Killed in 2025</h1>
+    <p>Total Candles Lit: <span id="candleCount">0</span></p>
+
+    <form id="candleForm">
+      <input type="text" id="nameInput" placeholder="Journalist's Name" required>
+      <textarea id="messageInput" placeholder="Optional Message"></textarea>
+      <button type="submit">Light Candle 🕯️</button>
+    </form>
+
+    <div id="candleWall" class="candle-wall"></div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
