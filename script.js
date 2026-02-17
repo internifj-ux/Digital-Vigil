@@ -33,7 +33,6 @@ renderCandles();
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const name = document.getElementById('nameInput').value.trim();
   const message = document.getElementById('messageInput').value.trim() || "In memory";
 
   const newCandle = { name, message };
@@ -48,3 +47,4 @@ form.addEventListener('submit', function (e) {
 
   form.reset();
 });
+
