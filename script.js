@@ -3,12 +3,13 @@ const form = document.getElementById('candleForm');
 const candleWall = document.getElementById('candleWall');
 const candleCountDisplay = document.getElementById('candleCount');
 
-// Load candles from localStorage OR empty array
+// Load candles from localStorage
 let candles = JSON.parse(localStorage.getItem('candles')) || [];
 
-// Function to render candles
+// Render candles
 function renderCandles() {
   candleWall.innerHTML = "";
+
   candles.forEach(candleData => {
     const candle = document.createElement('div');
     candle.classList.add('candle');
@@ -21,30 +22,28 @@ function renderCandles() {
     candleWall.appendChild(candle);
   });
 
-  // Update counter
   candleCountDisplay.textContent = candles.length;
 }
 
-// Initial render
+// Initial load
 renderCandles();
 
-// Only ONE event listener for the form
+// Submit event
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const message = document.getElementById('messageInput').value.trim() || "In memory";
+  const messageInput = document.getElementById('messageInput');
+  const message = messageInput.value.trim();
 
-  const newCandle = { name, message };
+  if (message === "") return; // prevent empty
+
+  const newCandle = { message };
 
   candles.push(newCandle);
 
-  // Save to localStorage
   localStorage.setItem('candles', JSON.stringify(candles));
 
-  // Re-render wall and counter
   renderCandles();
 
   form.reset();
 });
-
-
