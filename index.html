@@ -45,7 +45,7 @@
 
         candle.innerHTML = `
           <img src="images/candle.gif" class="candle-img" alt="Candle">
-        
+          <h3>${candleData.name}</h3>
           <p>${candleData.message}</p>
         `;
 
@@ -63,11 +63,11 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-     
+      const name = document.getElementById('nameInput').value.trim();
       const message = document.getElementById('messageInput').value.trim() || "In memory";
 
       // Create new candle object
-      const newCandle = { message };
+      const newCandle = { name, message };
 
       // Add to candles array
       candles.push(newCandle);
