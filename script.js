@@ -15,7 +15,6 @@ function renderCandles() {
 
     candle.innerHTML = `
       <img src="images/candle.gif" class="candle-img" alt="Candle">
-      <h3>${candleData.name}</h3>
       <p>${candleData.message}</p>
     `;
 
@@ -47,4 +46,5 @@ form.addEventListener('submit', function (e) {
 
   form.reset();
 });
+
 
