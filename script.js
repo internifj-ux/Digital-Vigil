@@ -1,49 +1,47 @@
-// Get elements
-const form = document.getElementById('candleForm');
-const candleWall = document.getElementById('candleWall');
-const candleCountDisplay = document.getElementById('candleCount');
+console.log("script loaded");
 
-// Load candles from localStorage
-let candles = JSON.parse(localStorage.getItem('candles')) || [];
+// Get elements
+const form = document.getElementById("candleForm");
+const messageInput = document.getElementById("messageInput");
+const candleWall = document.getElementById("candleWall");
+const candleCount = document.getElementById("candleCount");
+
+// Load saved candles
+let candles = JSON.parse(localStorage.getItem("candles")) || [];
 
 // Render candles
 function renderCandles() {
   candleWall.innerHTML = "";
 
-  candles.forEach(candleData => {
-    const candle = document.createElement('div');
-    candle.classList.add('candle');
+  candles.forEach((candle) => {
+    const div = document.createElement("div");
+    div.className = "candle";
 
-    candle.innerHTML = `
-      <img src="images/candle.gif" class="candle-img" alt="Candle">
-      <p>${candleData.message}</p>
+    div.innerHTML = `
+      <img src="images/candle.gif" alt="Candle" width="40">
+      <p>${candle.message}</p>
     `;
 
-    candleWall.appendChild(candle);
+    candleWall.appendChild(div);
   });
 
-  candleCountDisplay.textContent = candles.length;
+  candleCount.textContent = candles.length;
 }
 
-// Initial load
+// Initial render
 renderCandles();
 
-// Submit event
-form.addEventListener('submit', function (e) {
+// Submit handler
+form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const messageInput = document.getElementById('messageInput');
   const message = messageInput.value.trim();
+  if (!message) return;
 
-  if (message === "") return; // prevent empty
+  candles.push({ message });
 
-  const newCandle = { message };
-
-  candles.push(newCandle);
-
-  localStorage.setItem('candles', JSON.stringify(candles));
+  localStorage.setItem("candles", JSON.stringify(candles));
 
   renderCandles();
-
   form.reset();
 });
