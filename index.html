@@ -1,32 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Candle Vigil</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFJ Candle Vigil</title>
+  <link rel="stylesheet" href="style.css">
 
+  <!-- Optional: social media preview -->
+  <meta property="og:title" content="IFJ Candle Vigil - Remember Journalists Killed in 2025">
+  <meta property="og:description" content="Light a candle to honor journalists killed in 2025. #MoreThanANumber">
+  <meta property="og:image" content="images/candle.gif">
+  <meta property="og:url" content="https://yourusername.github.io/digital-candle-vigil/">
+</head>
 <body>
   <div class="vigil-container">
-    <h1>Light a Candle</h1>
-
-    <p>Total candles lit: <span id="candleCount">0</span></p>
+    <h1>Light a Candle for Journalists Killed in 2025</h1>
+    <p>Total Candles Lit: <span id="candleCount">0</span></p>
 
     <form id="candleForm">
-      <textarea
-        id="messageInput"
-        placeholder="Leave a message in memory…"
-        required
-      ></textarea>
-      <br />
+      <input type="text" id="nameInput" placeholder="Journalist's Name" required>
+      <textarea id="messageInput" placeholder="Optional Message"></textarea>
       <button type="submit">Light Candle 🕯️</button>
     </form>
 
-    <div id="candleWall"></div>
+    <div id="candleWall" class="candle-wall"></div>
   </div>
 
-  <!-- IMPORTANT: script at the bottom -->
-  <script src="script.js"></script>
+  <!-- Script for candle logic -->
+  <script>
+    // Get elements
+    const form = document.getElementById('candleForm');
+    const candleWall = document.getElementById('candleWall');
+    const candleCountDisplay = document.getElementById('candleCount');
+
+    // Load candles from localStorage OR empty array
+    let candles = JSON.parse(localStorage.getItem('candles')) || [];
+
+    // Function to render all candles
+    function renderCandles() {
+      candleWall.innerHTML = ""; // clear wall first
+      candles.forEach(candleData => {
+        const candle = document.createElement('div');
+        candle.classList.add('candle');
+
+        candle.innerHTML = `
+          <img src="images/candle.gif" class="candle-img" alt="Candle">
+        
+          <p>${candleData.message}</p>
+        `;
+
+        candleWall.appendChild(candle);
+      });
+
+      // Update counter
+      candleCountDisplay.textContent = candles.length;
+    }
+
+    // Initial render when page loads
+    renderCandles();
+
+    // Form submit event
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+     
+      const message = document.getElementById('messageInput').value.trim() || "In memory";
+
+      // Create new candle object
+      const newCandle = { message };
+
+      // Add to candles array
+      candles.push(newCandle);
+
+      // Save updated array to localStorage
+      localStorage.setItem('candles', JSON.stringify(candles));
+
+      // Re-render
+      renderCandles();
+
+      // Reset form
+      form.reset();
+    });
+  </script>
 </body>
 </html>
